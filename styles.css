@@ -7,144 +7,55 @@
 
 /* Styling for demonstration */
 .box {
-    margin-bottom: 10px;
-    padding: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
 }
 
-/* Specific styles for different display values */
-
-/* inline */
-.inline {
-    display: inline;
-}
-
-/* block */
-.block {
-    display: block;
-}
-
-/* contents */
-.contents {
-    display: contents;
-}
-
-.contents .child {
-    padding: 5px;
-    border: 1px solid #999;
+.relative {
+    position: relative;
+    left: 30px;
     background-color: #f0f0f0;
-    margin-bottom: 5px;
 }
 
-/* flex */
-.flex {
-    display: flex;
-    gap: 10px;
+.fixed {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f0f0f0;
 }
 
-.flex .flex-item {
+.absolute {
+    position: relative;
     padding: 10px;
-    border: 1px solid #999;
+    border: 1px solid #ccc;
     background-color: #f0f0f0;
 }
 
-/* grid */
-.grid {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(3, 1fr);
+.absolute .relative-parent {
+    position: relative;
+    height: 150px;
+    background-color: #f8f8f8;
+    overflow-y: auto;
 }
 
-.grid .grid-item {
+.absolute .absolute-child {
+    position: absolute;
+    top: 50px;
+    left: 20px;
     padding: 10px;
-    border: 1px solid #999;
+    background-color: #ccc;
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
     background-color: #f0f0f0;
-}
-
-/* inline-block */
-.inline-block {
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    background-color: #f0f0f0;
-}
-
-/* inline-flex */
-.inline-flex {
-    display: inline-flex;
-    gap: 10px;
-}
-
-.inline-flex .flex-item {
     padding: 10px;
-    border: 1px solid #999;
-    background-color: #f0f0f0;
 }
 
-/* inline-grid */
-.inline-grid {
-    display: inline-grid;
-    gap: 10px;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.inline-grid .grid-item {
-    padding: 10px;
-    border: 1px solid #999;
-    background-color: #f0f0f0;
-}
-
-/* inline-table */
-.inline-table {
-    display: inline-table;
-    margin-top: 10px;
-}
-
-.inline-table table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.inline-table td {
-    padding: 10px;
-    border: 1px solid #999;
-    background-color: #f0f0f0;
-}
-
-/* list-item */
-li {
-    display: list-item;
-}
-
-/* run-in */
-.run-in {
-    display: run-in;
-}
-
-/* table */
-.table {
-    display: table;
-    margin-top: 10px;
-}
-
-.table table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table td {
-    padding: 10px;
-    border: 1px solid #999;
-    background-color: #f0f0f0;
-}
-
-/* table-caption, table-column-group, table-header-group, etc. */
-.table-caption, .table-column-group, .table-header-group, .table-footer-group, .table-row-group, .table-cell, .table-column, .table-row {
-    display: table-caption;
-    margin-top: 10px;
-}
-
-/* none */
-.none {
-    display: none;
+.content {
+    height: 800px; /* to enable scrolling */
+    overflow-y: scroll;
+    padding: 20px;
 }
