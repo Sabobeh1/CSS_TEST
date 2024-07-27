@@ -114,31 +114,6 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  
-  @media (max-width: 718px) {
-    .card-container {
-      flex-direction: column;
-      height: 100%;
-      margin: 20px 0px;
-    }
-  
-    .card img {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      width: 40px;
-      height: 40px;
-    }
-    .card {
-      width: 40vw;
-      height: 20vh;
-    }
-  
-    .page-header{
-      height: 35vh;
-    }
-  }
   
   @media (max-width: 375px) {
     .card-container {
@@ -164,3 +139,27 @@ body {
     }
   }
 
+
+  @media (max-width: 718px) {
+    .card-container {
+      flex-direction: column;
+      height: 100%;
+      margin: 20px 0px;
+    }
+  
+    .card img {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+    }
+    .card {
+      width: 40vw;
+      height: 20vh;
+    }
+  
+    .page-header{
+      height: 35vh;
+    }
+  }
