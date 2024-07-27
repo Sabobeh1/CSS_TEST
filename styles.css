@@ -130,13 +130,30 @@ body {
       height: 30px;
     }
     .card {
-      width: 60vw;
+      width: 30vw;
       height: 20vh;
     }
   
     .page-header{
       height: 20vh;
     }
+
+    .page-header h1 {
+        font-size: 18px;
+        font-weight: 400;
+        color: hsl(234, 12%, 34%);
+      }
+      
+      .page-header h2 {
+        font-size: 17px;
+        font-weight: 600;
+        color: hsl(234, 12%, 34%);
+      }
+      
+      .page-header p {
+        font-size: 15px;
+        color: hsl(229, 6%, 66%);
+      }
   }
 
 
@@ -155,7 +172,7 @@ body {
       height: 40px;
     }
     .card {
-      width: 40vw;
+      width: 60vw;
       height: 20vh;
     }
   
