@@ -1,10 +1,26 @@
 
-//================================= form with table using array of objects===================//
-let arr = [1,2,3,4,5,6]
-let shakir = arr.map(function(number){
-    return `<h3>${number}</h3>`;
-}).join('')
-let sh = document.querySelector('body')
-console.log(shakir)
-sh.innerHTML=shakir;
+//================================= form with table using array of objects using map and array methods===================//
+var form = document.querySelector('form');
+var tbody = document.querySelector('tbody');
+var users = [];
 
+form.onsubmit = function(e) {
+    e.preventDefault(); // Stops the form from submitting normally
+    var user = {
+        name: e.target.elements[0].value,
+        password: e.target.elements[1].value
+    };
+    users.push(user);
+    updateTable();
+};
+
+function updateTable() {
+    let sh= users.map(function(user){
+       return `
+       <tr> 
+             <td>${user.name}</td>
+             <td>${user.password}</td>
+        </tr>`;
+    }).join('')
+    tbody.innerHTML = sh; // Update the table content
+}
