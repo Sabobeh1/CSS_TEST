@@ -23,3 +23,21 @@ const swiper = new Swiper('.swiper', {
         el: '.swiper-scrollbar',
     },
 });
+
+
+async function getApi(){
+    
+    let feh = await fetch("https://dummyjson.com/products");
+
+    let response = await feh.json();
+    
+    let data = response.products;
+    console.log(products);
+    
+    let printDiv = document.querySelector('.swiper-wrapper');
+
+    
+
+}
+
+getApi();
