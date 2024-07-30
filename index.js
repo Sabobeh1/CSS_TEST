@@ -1,26 +1,22 @@
 
 //================================= form with table using array of objects using map and array methods===================//
-var form = document.querySelector('form');
-var tbody = document.querySelector('tbody');
-var users = [];
-
-form.onsubmit = function(e) {
-    e.preventDefault(); // Stops the form from submitting normally
-    var user = {
-        name: e.target.elements[0].value,
-        password: e.target.elements[1].value
-    };
-    users.push(user);
-    updateTable();
-};
-
-function updateTable() {
-    let sh= users.map(function(user){
+async function getAPI(){
+    let api = await fetch("https://forkify-api.herokuapp.com/api/search?q=pizza");
+    let json = await  api.json();
+    var data = json.recipes;
+    let tbody = document.querySelector('.recipes');
+    let sh= data.map(function(recipe){
        return `
-       <tr> 
-             <td>${user.name}</td>
-             <td>${user.password}</td>
-        </tr>`;
+       <div class="content"> 
+             <img src="${recipe.image_url}"></img>
+             <h3>${recipe.title}</h3>
+             <a href='details.html?pizza_id=${recipe.recipe_id}'> See Details</a>
+       </div>`;
     }).join('')
     tbody.innerHTML = sh; // Update the table content
+    
 }
+
+getAPI();
+
+

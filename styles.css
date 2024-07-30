@@ -1,11 +1,15 @@
-table {
-    border-collapse: collapse;
-    width: 100%; /* Adjust width as necessary */
-    border: 1px solid black; /* Defines the outer border of the table */
+.recipes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* Adds space between items */
 }
 
-th, td {
-    border: 1px solid black; /* Defines the border for each cell */
-    padding: 8px; /* Adds some padding inside cells */
-    text-align: left; /* Aligns text to the left, can be adjusted */
+.recipes div{ /* Changed .div to .recipe for clarity */
+    width: calc(33.333% - 1rem); /* Adjust width with gap in mind */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
+
+.recipes img { /* Changed .img to .recipe img for more specificity */
+    width: 100%;
+    height: 40vh; /* Ensures the image maintains its aspect ratio */
 }
