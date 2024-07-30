@@ -1,15 +1,5 @@
-.recipes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem; /* Adds space between items */
-}
-
-.recipes div{ /* Changed .div to .recipe for clarity */
-    width: calc(33.333% - 1rem); /* Adjust width with gap in mind */
-    box-sizing: border-box; /* Ensures padding and border are included in the width */
-}
-
-.recipes img { /* Changed .img to .recipe img for more specificity */
-    width: 100%;
-    height: 40vh; /* Ensures the image maintains its aspect ratio */
-}
+.swiper {
+    width: 600px;
+    height: 600px;
+    background-color: antiquewhite
+  }
