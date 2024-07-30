@@ -10,7 +10,7 @@ async function getAPI(){
        <div class="content"> 
              <img src="${recipe.image_url}"></img>
              <h3>${recipe.title}</h3>
-             <a href='details.html?pizza_id=${recipe.recipe_id}'> See Details</a>
+             <a href='details.html?pizza_id=${recipe.recipe_id}&pizza_title=${recipe.title}'> See Details</a>
        </div>`;
     }).join('')
     tbody.innerHTML = sh; // Update the table content

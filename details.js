@@ -19,9 +19,11 @@ async function getPizza(id) {
     const recipe = data.recipe;
     console.log(recipe);
 
-    document.querySelector('.title h1').textContent = recipe.title;
-    document.querySelector('.typeImg').src = recipe.image_url;
-    document.querySelector('.ingredients').innerHTML = recipe.ingredients.map(function(item) {
+    let {title , image_url , ingredients} = recipe;
+
+    document.querySelector('.title h1').textContent = title;
+    document.querySelector('.typeImg').src = image_url;
+    document.querySelector('.ingredients').innerHTML = ingredients.map(function(item) {
         return `<li>${item}</li>`;
     }).join('');
 }
