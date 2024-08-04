@@ -1,165 +1,90 @@
 body {
-    font-family: "Poppins";
-    margin: 0;
-    padding: 0;
-    background-image: url("backImg.jpeg");
-    height: 100%;
-    color: hsl(234, 12%, 34%);
-    width: 100%;
-  }
-  
-  .page-holder{
-      background-color: hsl(0, 5%, 96%);
-      margin: 5%;
-      border-radius: 20px;
-      width: 90%;
-      height: 100%;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  }
-  
-  .page-header {
-    text-align: center;
-    padding: 20px;
-    color: hsl(234, 12%, 34%);
-    height: 10vh;
-  }
-  
-  .page-header h1 {
-    font-size: 24px;
-    font-weight: 400;
-    color: hsl(234, 12%, 34%);
-  }
-  
-  .page-header h2 {
-    font-size: 20px;
-    font-weight: 600;
-    color: hsl(234, 12%, 34%);
-  }
-  
-  .page-header p {
-    font-size: 15px;
-    color: hsl(229, 6%, 66%);
-  }
-  
-  .card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    height: 80vh;
-  }
-  .middle-cards {
-    display: flex;
-    flex-direction: column; 
-    gap: 20px; 
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    max-height: 100vh;
-    padding: 20px;
-  }
-  #card1 {
-    --card-color: hsl(180, 62%, 55%);
-  }
-  #card2 {
-    --card-color: hsl(34, 97%, 64%);
-  }
-  .card {
-    background: white;
-    border-top: 5px solid;
-    border-top-color: var(--card-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-    padding: 20px;
-    position: relative;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.5s;
-    border-radius: 5px;
-    width: 20vw;
-    height: 20vh;
-  }
-  
-  .card:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .card img {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    width: 50px;
-    height: 50px;
-  }
-  
-  .card-content {
-    text-align: left;
-    height: 80%;
-    width: 100%;
-  }
-  
-  .card h3 {
-    margin: 0;
-    font-weight: 600;
-  }
-  
-  .card p {
-    font-size: 15px;
-    font-weight: 200;
-    width: 100%;
-    height: 60%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  @media (max-width: 375px) {
-    .card-container {
-      flex-direction: column;
-      height: 100%;
-      margin: 20px 0px;
-    }
-  
-    .card img {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      width: 30px;
-      height: 30px;
-    }
-    .card {
-      width: 60vw;
-      height: 20vh;
-    }
-  
-    .page-header{
-      height: 20vh;
-    }
-  }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
 
+.container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
 
-  @media (max-width: 718px) {
-    .card-container {
-      flex-direction: column;
-      height: 100%;
-      margin: 20px 0px;
-    }
-  
-    .card img {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      width: 40px;
-      height: 40px;
-    }
-    .card {
-      width: 40vw;
-      height: 20vh;
-    }
-  
-    .page-header{
-      height: 35vh;
-    }
+.feedback {
+  margin-bottom: 20px;
+  padding: 10px;
+  color: #721c24; /* default for error */
+  background-color: #f8d7da; /* default for error */
+  border: 1px solid #f5c6cb; /* default for error */
+  display: none;
+}
+
+.btn {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #37ba67;
+  color: white;
+}
+
+.input-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-group input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+.item-list {
+  margin-top: 20px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  margin-bottom: 5px;
+}
+
+.item.completed {
+  background-color: #eee; /* grey out when completed */
+}
+
+.item-name {
+  flex-grow: 1;
+}
+
+.item-icons {
+  display: flex;
+  align-items: center;
+}
+
+.item-icons i {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.item-icons {
+  display: flex;
+  gap: 1rem;
+  cursor: pointer;
+  .fa-check-circle {
+    color: green;
   }
+  .fa-times-circle {
+    color: red;
+  }
+}
