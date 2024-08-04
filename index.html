@@ -1,73 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Feature Cards</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="icons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap"
-      rel="stylesheet"/>
-  </head>
-  <body>
-    <div class="page-holder">
-      <header class="page-header">
-        <h1>Reliable, efficient delivery</h1>
-        <h2>Powered by Technology</h2>
-        <p>
-          Our Artificial Intelligence powered tools use millions of project data
-          points to ensure that your project is successful
-        </p>
-      </header>
-      <section class="card-container">
-        <div class="card" style="--card-color: hsl(0, 78%, 62%)">
-          <div class="card-content">
-            <h3>Supervisor</h3>
-            <p>Monitors activity to identify project roadblocks</p>
-          </div>
-          <img src="icons/icon-supervisor.svg" alt="Supervisor Icon" />
+<html>
+<head>
+    <title>Slide Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sidebar" id="mySidebar">
+    <button class="bar-item button large" onclick="w3_close()">Close &times;</button>
+    <a href="#" class="bar-item button">Link 1</a>
+    <a href="#" class="bar-item button">Link 2</a>
+    <a href="#" class="bar-item button">Link 3</a>
+</div>
+
+<div id="main">
+    <div class="teal">
+        <button id="openNav" class="button teal large">&#9776;</button>
+        <div class="container">
+            <h1>My Page</h1>
         </div>
-        <div class="middle-cards">
-          <div id="card1" class="card">
-            <div class="card-content">
-              <h3>Team Builder</h3>
-              <p>
-                Scans our talent network to create the optimal team for your
-                project
-              </p>
-            </div>
-            <img src="icons/icon-team-builder.svg" alt="Team Builder Icon" />
-          </div>
-          <div id="card2" class="card">
-            <div class="card-content">
-              <h3>Karma</h3>
-              <p id="cardText">
-                Regularly evaluates our talent to ensure qualityRegularly
-                evaluates our talent to ensure quality Regularly evaluates our
-                talent to ensure qualityRegularly evaluates our talent to ensure
-                qualityRegularly evaluates our talent to ensure quality
-                Regularly evaluates our talent to ensure qualityRegularly
-                evaluates our talent to ensure qualityRegularly evaluates our
-                talent to ensure quality Regularly evaluates our talent to
-                ensure qualityRegularly evaluates our talent to ensure
-                qualityRegularly evaluates our talent to ensure qualityRegularly
-                evaluates our talent to ensure quality
-              </p>
-            </div>
-            <img src="icons/icon-karma.svg" alt="Karma Icon" />
-          </div>
-        </div>
-        <div class="card" style="--card-color: hsl(212, 86%, 64%)">
-          <div class="card-content">
-            <h3>Calculator</h3>
-            <p>
-              Uses data from past projects to provide better delivery estimates
-            </p>
-          </div>
-          <img src="icons/icon-calculator.svg" alt="Calculator Icon" />
-        </div>
-      </section>
     </div>
-  </body>
+
+    <img src="img_car.jpg" alt="Car" style="width:100%">
+
+    <div class="container">
+        <p>This sidebar is initially hidden and shown on button click.</p>
+        <p>When the sidebar is opened, it shifts the page content to the right.</p>
+        <p>We use JavaScript to add a 25% left margin to the div element with id="main" when this happens.</p>
+    </div>
+</div>
+
+<script src="index.js"></script>
+</body>
 </html>
