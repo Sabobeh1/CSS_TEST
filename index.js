@@ -8,18 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load existing items from localStorage
     loadItems();
 
-    // Form submission to add a new item
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        const itemName = itemInput.value.trim();
-        if (itemName.length === 0) {
-            showFeedback('Please enter a valid value', 'error');
+        let itemName = itemInput.value.trim();
+        // Ensure the input is treated as a string
+        itemName = String(itemName);  
+        if (!isValidItem(itemName)) {
+            showFeedback('Please enter a valid task name', 'error');
         } else {
             addItem(itemName);
             itemInput.value = '';
-            showFeedback('Item added successfully', 'success');
+            showFeedback('Task added successfully', 'success');
+            updateIndexes();
         }
     });
+        // Function to validate input
+        function isValidItem(item) {
+            return item.length > 0 && /^[a-zA-z\s]+$/i.test(item);
+        }
 
     // Clear all items
     clearButton.addEventListener('click', () => {
@@ -30,37 +36,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    window.deleteItem = function(icon) {
+        if (confirm("Are you sure you want to delete this item?")) {
+            const item = icon.parentElement.parentElement;
+            itemList.removeChild(item);
+            updateLocalStorage(); // Make sure this function correctly updates the local storage after an item is removed
+            updateIndexes();
+            showFeedback('Item deleted', 'success');
+        }
+    };
+
     function loadItems() {
         const storedItems = JSON.parse(localStorage.getItem('todoItems'));
         if (storedItems) {
             storedItems.forEach(item => addItem(item.name, item.completed));
+            updateIndexes();
         }
     }
-
     function addItem(name, completed = false) {
         const itemDiv = document.createElement('div');
         itemDiv.classList.add('item');
+
+        const itemInfo = document.createElement('div');
+        itemInfo.className = 'item-info';
+
+        // Create and append the index element
+        const itemIndex = document.createElement('span');
+        itemIndex.className = 'item-index';
+
+        const itemNameSpan = document.createElement('span');
+        itemNameSpan.classList.add('item-name');
         if (completed) {
-            itemDiv.classList.add('completed');
+            itemNameSpan.classList.add('completed');
         }
-        itemDiv.innerHTML = `
-            <span class="item-name">${name}</span>
-            <div class="item-icons">
-                <i class="far fa-check-circle text-success complete-item" onclick="toggleComplete(this)"></i>
-                <i class="far fa-edit text-secondary edit-item" onclick="editItem(this)"></i>
-                <i class="far fa-times-circle text-danger delete-item" onclick="deleteItem(this)"></i>
-            </div>
+        itemNameSpan.textContent = name;
+
+        itemInfo.appendChild(itemIndex); // Initially leave this blank, will set in updateIndexes()
+        itemInfo.appendChild(itemNameSpan);
+
+        const iconsDiv = document.createElement('div');
+        iconsDiv.className = 'item-icons';
+        iconsDiv.innerHTML = `
+            <i class="far fa-check-circle text-success complete-item" onclick="toggleComplete(this)"></i>
+            <i class="far fa-edit text-secondary edit-item" onclick="editItem(this)"></i>
+            <i class="far fa-times-circle text-danger delete-item" onclick="deleteItem(this)"></i>
         `;
+
+        itemDiv.appendChild(itemInfo);
+        itemDiv.appendChild(iconsDiv);
         itemList.appendChild(itemDiv);
+
         updateLocalStorage();
+        updateIndexes();  // Update indexes whenever a new item is added
     }
 
-    window.deleteItem = function(icon) {
-        const item = icon.parentElement.parentElement;
-        itemList.removeChild(item);
-        updateLocalStorage();
-        showFeedback('Item deleted', 'success');
-    };
+    function updateIndexes() {
+        const indexes = document.querySelectorAll('.item-index');
+        indexes.forEach((index, i) => {
+            index.textContent = (i-1) + 1;  // Correctly number each item
+        });
+    }
 
     window.editItem = function(icon) {
         const item = icon.parentElement.parentElement;
@@ -68,13 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
         itemInput.value = name;
         itemList.removeChild(item);
         updateLocalStorage();
+        updateIndexes();  // Update indexes after an item is removed for editing
         itemInput.focus();
         showFeedback('Edit the item and add again', 'info');
     };
 
     window.toggleComplete = function(icon) {
-        const item = icon.parentElement.parentElement;
-        item.classList.toggle('completed');
+        const itemName = icon.closest('.item').querySelector('.item-name');
+        const itemIndex= icon.closest('.item').querySelector('.item-index');
+        icon.closest('.item').classList.toggle('completed');
+        itemIndex.classList.toggle('completed');
+        itemName.classList.toggle('completed');
         updateLocalStorage();
         showFeedback('Item completion toggled', 'success');
     };
