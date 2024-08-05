@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isValidItem(itemName)) {
             showFeedback('Please enter a valid task name', 'error');
         } else {
-            addItem(itemName);
+            addItem(itemName, false);
             itemInput.value = '';
             showFeedback('Task added successfully', 'success');
             updateIndexes();
@@ -58,9 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndexes();
         }
     }
-    function addItem(name, completed = false) {
+    function addItem(name, completed) {
         const itemDiv = document.createElement('div');
         itemDiv.classList.add('item');
+
+        if (completed) {
+            itemDiv.classList.add('completed'); // Ensure the main item div also gets the 'completed' class if needed
+        }
 
         const itemInfo = document.createElement('div');
         itemInfo.className = 'item-info';
@@ -116,9 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.toggleComplete = function(icon) {
-        const itemName = icon.closest('.item').querySelector('.item-name');
-        const itemIndex= icon.closest('.item').querySelector('.item-index');
-        icon.closest('.item').classList.toggle('completed');
+        const item = icon.closest('.item')
+        const itemName = item.querySelector('.item-name');
+        const itemIndex= item.querySelector('.item-index');
+        item.classList.toggle('completed');
         itemIndex.classList.toggle('completed');
         itemName.classList.toggle('completed');
         updateLocalStorage();
@@ -128,13 +133,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateLocalStorage() {
         const items = [];
         document.querySelectorAll('.item').forEach(item => {
-            items.push({
-                name: item.querySelector('.item-name').textContent,
-                completed: item.classList.contains('completed')
-            });
+            const name = item.querySelector('.item-name').textContent;
+            const completed = item.classList.contains('completed'); // Check if the item's main div has 'completed' class
+            items.push({ name, completed });
         });
         localStorage.setItem('todoItems', JSON.stringify(items));
     }
+    
 
     function showFeedback(message, type) {
         feedback.textContent = message;

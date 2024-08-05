@@ -122,7 +122,6 @@ body {
   
 }
 .item-index.completed {
-  text-decoration: line-through;
   color: #a8aaad;
 
 }
