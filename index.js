@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         let itemName = itemInput.value.trim();
+        const addButton = document.getElementById('add-item');
+
         // Ensure the input is treated as a string
         itemName = String(itemName);  
         if (!isValidItem(itemName)) {
@@ -20,11 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
             itemInput.value = '';
             showFeedback('Task added successfully', 'success');
             updateIndexes();
+            addButton.textContent = 'Add Item';
+            
         }
     });
+    
         // Function to validate input
         function isValidItem(item) {
-            return item.length > 0 && /^[a-zA-z\s]+$/i.test(item);
+            return item.length > 0 && /^[a-zA-Z]+[a-zA-Z0-9\s]*$/i.test(item);
         }
 
     // Clear all items
@@ -105,6 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLocalStorage();
         updateIndexes();  // Update indexes after an item is removed for editing
         itemInput.focus();
+        const addButton = document.getElementById('add-item');
+        addButton.textContent = 'Edit Item';  // Directly set the button text
         showFeedback('Edit the item and add again', 'info');
     };
 
