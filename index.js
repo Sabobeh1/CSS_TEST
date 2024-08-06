@@ -1,22 +1,11 @@
-// Storage functions
-function getItems() {
-    const storedItems = localStorage.getItem('todoItems');
-    return storedItems ? JSON.parse(storedItems) : [];
-}
-
-function saveItems(items) {
-    localStorage.setItem('todoItems', JSON.stringify(items));
-}
-
-function clearItems() {
-    localStorage.removeItem('todoItems');
-}
-
     const form = document.getElementById('itemForm');
     const itemInput = document.getElementById('itemInput');
     const itemList = document.querySelector('.item-list');
     const clearButton = document.getElementById('clear-list');
     const feedback = document.querySelector('.feedback');
+
+    // Array to hold tasks
+    let tasks = [];
 
     // Load existing items from localStorage
     loadItems();
@@ -26,11 +15,12 @@ function clearItems() {
         let itemName = itemInput.value.trim();
         const addButton = document.getElementById('add-item');
 
+        // Ensure the input is treated as a string
         itemName = String(itemName);  
         if (!isValidItem(itemName)) {
             showFeedback('Please enter a valid task name', 'error');
         } else {
-            addItem(itemName, false);
+            addTask(itemName, false);
             itemInput.value = '';
             showFeedback('Task added successfully', 'success');
             updateIndexes();
@@ -41,128 +31,117 @@ function clearItems() {
     clearButton.addEventListener('click', () => {
         if (confirm("Are you sure you want to clear all items?")) {
             clearItems();
-            itemList.innerHTML = '';
             showFeedback('All items cleared', 'success');
         }
     });
 
-    function deleteItem(icon) {
-        if (confirm("Are you sure you want to delete this item?")) {
-            const item = icon.parentElement.parentElement;
-            itemList.removeChild(item);
-            updateLocalStorage();
-            updateIndexes();
-            showFeedback('Item deleted', 'success');
-        }
+    function addTask(name, completed) {
+        const task = { name, completed, index: tasks.length };
+        tasks.push(task);
+        updateLocalStorage();
+        renderTasks();
     }
 
-    function editItem(icon) {
-        const item = icon.parentElement.parentElement;
-        const name = item.querySelector('.item-name').innerText;
-        itemInput.value = name;
-        itemList.removeChild(item);
+    function editTask(index) {
+        const task = tasks[index];
+        itemInput.value = task.name;
+        tasks.splice(index, 1);
         updateLocalStorage();
-        updateIndexes();
+        renderTasks();
         itemInput.focus();
         const addButton = document.getElementById('add-item');
         addButton.textContent = 'Edit Item';
         showFeedback('Edit the item and add again', 'info');
     }
 
-    function toggleComplete(icon) {
-        const item = icon.parentElement.parentElement;
-        const itemName = item.querySelector('.item-name');
-        const itemIndex = item.querySelector('.item-index');
+    function deleteTask(index) {
+        if (confirm("Are you sure you want to delete this item?")) {
+            tasks.splice(index, 1);
+            updateLocalStorage();
+            renderTasks();
+            showFeedback('Item deleted', 'success');
+        }
+    }
 
-        item.classList.toggle('completed');
-        itemName.classList.toggle('completed');
-        itemIndex.classList.toggle('completed');
-
+    function toggleComplete(index) {
+        const task = tasks[index];
+        task.completed = !task.completed;
         updateLocalStorage();
+        renderTasks();
         showFeedback('Item completion toggled', 'success');
     }
 
     function loadItems() {
-        const storedItems = getItems();
-        storedItems.forEach(item => addItem(item.name, item.completed, item.index));
-        updateIndexes();
+        const storedItems = JSON.parse(localStorage.getItem('todoItems'));
+        if (storedItems) {
+            tasks = storedItems;
+            renderTasks();
+        }
+    }
+
+    function clearItems() {
+        tasks = [];
+        updateLocalStorage();
+        renderTasks();
+    }
+
+    function renderTasks() {
+        itemList.innerHTML = '';
+        tasks.forEach((task, index) => {
+            addItem(task.name, task.completed, index);
+        });
     }
 
     function addItem(name, completed, index) {
+        const itemDivClass = completed ? 'item completed' : 'item';
+        const itemIndexClass = completed ? 'item-index completed' : 'item-index';
+        const itemNameClass = completed ? 'item-name completed' : 'item-name';
+
+        const itemHTML = `
+            <div class="${itemDivClass}">
+                <div class="item-info">
+                    <span class="${itemIndexClass}">${index}</span>
+                    <span class="${itemNameClass}">${name}</span>
+                </div>
+                <div class="item-icons">
+                    <i class="far fa-check-circle text-success complete-item"></i>
+                    <i class="far fa-edit text-secondary edit-item"></i>
+                    <i class="far fa-times-circle text-danger delete-item"></i>
+                </div>
+            </div>
+        `;
+
         const itemDiv = document.createElement('div');
-        itemDiv.classList.add('item');
+        itemDiv.innerHTML = itemHTML;
+        const newItem = itemDiv.firstElementChild;
 
-        if (completed) {
-            itemDiv.classList.add('completed');
-        }
+        // Adding event listeners to the icons
+        const completeIcon = newItem.querySelector('.complete-item');
+        completeIcon.onclick = function() { toggleComplete(index); };
 
-        const itemInfo = document.createElement('div');
-        itemInfo.className = 'item-info';
+        const editIcon = newItem.querySelector('.edit-item');
+        editIcon.onclick = function() { editTask(index); };
 
-        const itemIndex = document.createElement('span');
-        itemIndex.className = 'item-index';
-        if (completed) {
-            itemIndex.classList.add('completed');
-        }
-        itemIndex.textContent = index !== undefined ? index : itemList.children.length + 1;
+        const deleteIcon = newItem.querySelector('.delete-item');
+        deleteIcon.onclick = function() { deleteTask(index); };
 
-        const itemNameSpan = document.createElement('span');
-        itemNameSpan.classList.add('item-name');
-        if (completed) {
-            itemNameSpan.classList.add('completed');
-        }
-        itemNameSpan.textContent = name;
-
-        itemInfo.appendChild(itemIndex);
-        itemInfo.appendChild(itemNameSpan);
-
-        const iconsDiv = document.createElement('div');
-        iconsDiv.className = 'item-icons';
-
-        const completeIcon = document.createElement('i');
-        completeIcon.className = 'far fa-check-circle text-success complete-item';
-        completeIcon.onclick = function() { toggleComplete(completeIcon); };
-
-        const editIcon = document.createElement('i');
-        editIcon.className = 'far fa-edit text-secondary edit-item';
-        editIcon.onclick = function() { editItem(editIcon); };
-
-        const deleteIcon = document.createElement('i');
-        deleteIcon.className = 'far fa-times-circle text-danger delete-item';
-        deleteIcon.onclick = function() { deleteItem(deleteIcon); };
-
-        iconsDiv.appendChild(completeIcon);
-        iconsDiv.appendChild(editIcon);
-        iconsDiv.appendChild(deleteIcon);
-
-        itemDiv.appendChild(itemInfo);
-        itemDiv.appendChild(iconsDiv);
-        itemList.appendChild(itemDiv);
-
-        updateLocalStorage();
-        updateIndexes();
+        itemList.appendChild(newItem);
     }
 
     function updateIndexes() {
-        const indexes = document.querySelectorAll('.item-index');
-        Array.from(indexes).map((index, i) => {
-            index.textContent =(i-1) + 1;
+        tasks.forEach((task, i) => {
+            task.index = i;
         });
     }
 
     function updateLocalStorage() {
-        const items = Array.from(document.querySelectorAll('.item')).map((item, index) => {
-            const name = item.querySelector('.item-name').textContent;
-            const completed = item.classList.contains('completed');
-            return { name, completed, index: index + 1 };
-        });
-        saveItems(items);
+        localStorage.setItem('todoItems', JSON.stringify(tasks));
     }
 
     function showFeedback(message, type) {
         feedback.textContent = message;
         feedback.style.display = 'block';
-        feedback.className = 'feedback';
+        feedback.className = 'feedback'; // Reset class
         if (type === 'success') {
             feedback.style.backgroundColor = '#d4edda';
             feedback.style.color = '#155724';
@@ -182,3 +161,4 @@ function clearItems() {
     function isValidItem(item) {
         return item.length > 0 && /^[a-zA-Z]+[a-zA-Z0-9\s]*$/i.test(item);
     }
+
